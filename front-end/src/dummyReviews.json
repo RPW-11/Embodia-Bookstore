@@ -1,0 +1,32 @@
+[
+    {
+        "userId": 1,
+        "username": "Kubikir",
+        "review": "Embodia is a mesmerizing journey through a futuristic world filled with technological wonders. The author's imaginative storytelling keeps you hooked from start to finish. The intricate plot and well-developed characters make for an engaging read. While some parts felt a bit complex, overall, the book offers a unique and thought-provoking experience.",
+        "rating": 4
+    },
+    {
+        "userId": 2,
+        "username": "Wakatobi",
+        "review": "Embodia presents an intriguing concept that blends fantasy and science fiction elements. The world-building is impressive, immersing readers in a vividly imagined universe. However, the pacing felt uneven, and certain plot twists were rather predictable. While the book has its moments of brilliance, it falls short of fully realizing its potential.",
+        "rating": 3
+    },
+    {
+        "userId": 3,
+        "username": "Ukitake",
+        "review": "Embodia is an absolute masterpiece that transports you to a realm of endless possibilities. The author's lyrical prose weaves a tapestry of emotions and adventures. The characters are so well-crafted that you'll feel their joys and sorrows as if they were your own. Every page is a delight, and the ending leaves you craving for more.",
+        "rating": 5
+    },
+    {
+        "userId": 4,
+        "username": "Devinatah",
+        "review": "Embodia left me perplexed and unsatisfied. The narrative jumps between timelines and perspectives without clear transitions, making it hard to follow. The book's premise held promise, but the execution fell flat. It's a frustrating experience trying to piece together the convoluted plot, and by the end, I was left feeling bewildered.",
+        "rating": 2
+    },
+    {
+        "userId": 5,
+        "username": "Angela Oryza",
+        "review": "Embodia is a mind-bending journey that challenges your perceptions of reality. The author's ability to blend philosophical themes with a gripping storyline is commendable. The intricate connections between characters and events kept me engaged, and the climactic revelations were nothing short of mind-blowing. A must-read for anyone seeking a book that pushes the boundaries of imagination.",
+        "rating": 5
+    }
+]
