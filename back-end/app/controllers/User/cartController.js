@@ -2,6 +2,16 @@ const User = require("../../models/User");
 const Book = require("../../models/Book");
 
 module.exports = {
+    getUserCart: async (req, res) => {
+        const { userId } = req.query;
+
+        try {
+            const user = await User.findOne({ _id: userId });
+            res.status(200).json(user.cart);
+        } catch (error) {
+            res.status(400).json(error.message);
+        }
+    },
     addItem: async (req, res) => {
         const { userId, bookId } = req.body;
 
@@ -46,18 +56,34 @@ module.exports = {
         }
     },
     deleteItem: async (req, res) => {
-        const { userId, bookId } = req.body; 
-
+        const { userId, bookId } = req.query;
+        console.log(bookId);
         try {
-            const updatedCart = await User.findOneAndUpdate(
-                { _id: userId, 'cart.bookId': bookId },
-                {
-                    $pull: {
-                        cart: { bookId }
-                    }
-                },
-                { new: true }
-            );
+            let updatedCart = null;
+            if (typeof bookId === 'string') {
+                updatedCart = await User.findOneAndUpdate(
+                    { _id: userId },
+                    {
+                        $pull: {
+                            cart: { bookId }
+                        }
+                    },
+                    { new: true }
+                );
+            }
+            else{
+                updatedCart = await User.findOneAndUpdate(
+                    { _id: userId },
+                    {
+                        $pull: {
+                            cart: { 
+                                bookId: { $in: bookId }
+                            }
+                        }
+                    },
+                    { new: true }
+                );
+            }
             if (!updatedCart) {
                 throw Error("User or Book doesn't exist");
             }

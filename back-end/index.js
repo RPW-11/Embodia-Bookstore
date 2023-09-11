@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 
 app.use(authRoutes);
 app.use("/api/v1/book", bookRoutes);
-app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/user", requireAuth, userRoutes);
 app.get("/", requireAuth, (req, res) => {
     res.json({message: "Hello friends!"});
 });

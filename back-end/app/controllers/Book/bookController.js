@@ -22,9 +22,19 @@ const handleErrors = (error) => {
 
 module.exports = {
     get: async (req, res) => {
+        const { bookIds } = req.query;
+        let books = null;  
         try {
-            const books = await Book.find();
-            res.status(200).json(books);
+            if(bookIds){
+                books = await Book.find({
+                    _id: { $in : bookIds }
+                });
+                res.status(200).json(books);
+            }
+            else{
+                books = await Book.find();
+                res.status(200).json(books);
+            }
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
@@ -66,6 +76,52 @@ module.exports = {
             res.status(200).json(message);
         } catch (error) {
             res.status(400).json({ message: error.message })
+        }
+    },
+    search: async (req, res) => {
+        const { q } = req.query;
+        try {
+            const books = await Book.aggregate([{
+                $search: {
+                    index: "searchBooks",
+                    text: {
+                        query: q,
+                        path: {
+                            wildcard: "*"
+                        },
+                        fuzzy: {}
+                    }
+                }
+            }]);
+            res.status(200).json(books);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json(error);
+        }
+    },
+    autoComplete: async (req, res) => {
+        const { q } = req.query;
+        try {
+            const books = await Book.aggregate([
+                {
+                    $search: {
+                        index: "autoCompleteBooks",
+                        autocomplete: {
+                            query: q,
+                            path: "title",
+                            tokenOrder: "sequential"
+                        }
+                    }
+                },
+                { $limit: 5 },
+                {
+                    $project: { title: 1}
+                }
+            ]);
+            res.status(200).json(books);
+        } catch (error) {
+            console.log(error);
+            res.status(400).json(error);
         }
     }
 }
