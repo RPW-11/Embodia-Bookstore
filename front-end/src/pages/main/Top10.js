@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 const Top10 = ({ data }) => {
+    const navigate = useNavigate();
     return ( 
         <div className="">
             <div className="text-xl text-left mb-3">Trending 10 Books</div>
             <div className="flex w-full overflow-scroll">
                 { data.map(item => (
-                    <div className="py-3 ml-3 mr-10 hover:underline cursor-pointer group" key={ item._id }>
+                    <div className="py-3 ml-3 mr-10 hover:underline cursor-pointer group" key={ item._id } onClick={ () => navigate(`/books/${item._id}`)}>
                         <div className="h-[180px]">
                             <img src={ item.coverImage } alt="" 
                             className="w-[120px] shadow-[rgba(0,0,0,0.3)_-5px_10px_9px_2px] group-hover:scale-105"/>
