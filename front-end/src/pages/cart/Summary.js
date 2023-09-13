@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Summary = ({ data }) => {
     const [ subTotal, setSubtotal ] = useState(0);
     const [ discount, setDiscount ] = useState(0);
     const [ grandTotal, setGrandTotal ] = useState(0);
+    const navigate = useNavigate();
     useEffect(() => {
         let total = data.reduce((accumulator, item) => {
             return accumulator + item.price * item.quantity;
@@ -29,7 +31,8 @@ const Summary = ({ data }) => {
                 <s className="no-underline font-semibold">Grand total</s>
                 <s className="no-underline font-semibold">IDR { grandTotal }</s>
             </div>
-            <button className="bg-stone-900 rounded-md text-stone-50 w-full py-2 mt-5 hover:bg-stone-900/80 font-medium">Check out</button>
+            <button onClick={() => navigate("/cart/checkout")}
+            className="bg-stone-900 rounded-md text-stone-50 w-full py-2 mt-5 hover:bg-stone-900/80 font-medium">Check out</button>
         </div>
      );
 }

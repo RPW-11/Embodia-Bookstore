@@ -4,7 +4,7 @@ import Payment from "./Payment";
 
 const CheckOut = () => {
     return ( 
-        <div id="Checkout" className="px-20 py-10 w-full text-left h-[1000px]">
+        <div id="Checkout" className="px-20 py-10 w-full text-left h-full">
             <div className="text-2xl font-semibold">Checkout</div>
             <div className="grid grid-cols-3">
                 <div className="col-span-2 pr-5">
@@ -20,7 +20,7 @@ const CheckOut = () => {
                 </div>
             </div>
         </div>
-     );
+    );
 }
  
 export default CheckOut;
