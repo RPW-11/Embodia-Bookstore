@@ -24,6 +24,25 @@ const orderSchema = new mongoose.Schema({
     totalPrice: {
         type: Number,
         required: true
+    },
+    addressId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'address',
+        required: true
+    },
+    status: {
+        type: String,
+        default: 'unpaid'
+    },
+    shipment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'shipment',
+        required: true
+    },
+    payment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'payment',
+        required: true
     }
 });
 

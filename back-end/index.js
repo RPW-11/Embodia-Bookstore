@@ -16,6 +16,7 @@ const corsOptions = {
 const authRoutes = require("./app/routes/authRoutes");
 const bookRoutes = require("./app/routes/bookRoutes");
 const userRoutes = require("./app/routes/userRoutes");
+const shipmentRoutes = require("./app/routes/shipmentRoutes");
 
 // Middleware
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use(cors(corsOptions));
 app.use(authRoutes);
 app.use("/api/v1/book", bookRoutes);
 app.use("/api/v1/user", requireAuth, userRoutes);
+app.use("/api/v1", shipmentRoutes);
 app.get("/", requireAuth, (req, res) => {
     res.json({message: "Hello friends!"});
 });
