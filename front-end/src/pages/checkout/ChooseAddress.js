@@ -81,25 +81,27 @@ const ChooseAddress = () => {
                 <CustomModal isOpen={ isChoosingAddress } >
                     <div className="p-5 font-main w-[600px]">
                         <div className="text-2xl pb-3 mb-5 border-b">Choose Your Address</div>
-                        {userAddresses.map((addr) => (
-                            <div className="flex items-center" key={addr._id}>
-                                <button className="text-left rounded-md w-full border mb-3 p-3 shadow" onClick={() => handleChoosingAddress(addr)}>
-                                    <div className="text-sm font-medium mb-3">Receiver: {addr.receiver} - {addr.phoneNumber}</div>
-                                    <div className="font-light">{addr.address}</div>
-                                    <div className="text-sm">{addr.province + " " + addr.city + ", " + addr.postalCode}</div>
-                                </button>
-                                <div className="absolute z-50 right-8 mb-3 flex items-center justify-between">
-                                    <button onClick={() => handleChange(addr)}
-                                    className="px-5 py-1 text-sm border rounded-full mr-3 border-stone-400 text-stone-400 
-                                    hover:font-medium hover:shadow-gray-400/50 hover:shadow-md">
-                                        CHANGE</button>
-                                    <button onClick={() => deleteAddress(addr._id)}
-                                    className="px-5 py-1 text-sm border rounded-full border-red-400 text-red-400 hover:font-medium 
-                                    hover:shadow-red-400/50 hover:shadow-md">
-                                        DELETE</button>
+                        <div className="absolute relative h-[400px] scrollbar-hide overflow-y-scroll z-50">
+                            {userAddresses.map((addr) => (
+                                <div className="flex items-center" key={addr._id}>
+                                    <button className="text-left rounded-md w-full border mb-3 p-3 shadow" onClick={() => handleChoosingAddress(addr)}>
+                                        <div className="text-sm font-medium mb-3">Receiver: {addr.receiver} - {addr.phoneNumber}</div>
+                                        <div className="font-light">{addr.address}</div>
+                                        <div className="text-sm">{addr.province + " " + addr.city + ", " + addr.postalCode}</div>
+                                    </button>
+                                    <div className="absolute z-40 right-8 mb-3 flex items-center justify-between">
+                                        <button onClick={() => handleChange(addr)}
+                                        className="px-5 py-1 text-sm border rounded-full mr-3 border-stone-400 text-stone-400 
+                                        hover:font-medium hover:shadow-gray-400/50 hover:shadow-md">
+                                            CHANGE</button>
+                                        <button onClick={() => deleteAddress(addr._id)}
+                                        className="px-5 py-1 text-sm border rounded-full border-red-400 text-red-400 hover:font-medium 
+                                        hover:shadow-red-400/50 hover:shadow-md">
+                                            DELETE</button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                         <button onClick={() => setIsChoosingAddress(false)} className="absolute top-0 right-0 p-2 hover:bg-stone-400 rounded-full"><GrClose/></button>
                     </div>
                 </CustomModal>
