@@ -13,6 +13,13 @@ const ShipmentService = () => {
         setIsChoosingShipment(false);
     }
 
+    const estimatedArrival = (duration) => {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const current = new Date();
+        current.setDate(current.getDate() + duration);
+        return `${current.getDate()} ${months[current.getMonth()]} ${current.getFullYear()}`;
+    }
+
     useEffect(() => {
         api.get("/api/v1/shipment").then(res => {
             setShipments(res.data);
@@ -27,7 +34,7 @@ const ShipmentService = () => {
             <div className="py-3 flex items-center justify-between">
                 <div className="">
                     { courier.courier }
-                    <div className="no-underline text-sm font-light">{courier.service.name} Estimated arrival on Saturday, 25 Dec 2023</div>
+                    <div className="no-underline text-sm font-light">{courier.service.name} Estimated arrival on {estimatedArrival(courier.service.duration[0])} or {estimatedArrival(courier.service.duration[1])}</div>
                 </div>
                 <div className="flex items-center text-center">
                     <div className="text-sm mr-5 font-medium">Courier</div>
