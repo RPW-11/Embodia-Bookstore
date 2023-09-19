@@ -1,8 +1,10 @@
 import { useState } from "react";
 import api from "../../api";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const PlusMinus = ({ initialAmount, books, handler, userId, bookId }) => {
     const [ amount, setAmount ] = useState(initialAmount);
+    const { user, dispatch } = useAuthContext();
     const updateAmount = (operator) => {
         let newAmount = amount;
         if(operator === '+'){
@@ -23,7 +25,9 @@ const PlusMinus = ({ initialAmount, books, handler, userId, bookId }) => {
         api.put("/api/v1/user/cart", {
             userId, bookId, quantity: newAmount
         }).then(res => {
-            console.log(res.data);
+            const updatedUser = user;
+            updatedUser.cart = res.data.cart;
+            dispatch({ type: 'LOGIN', payload: updatedUser });
         }).catch(err => {
             console.log(err);
         });

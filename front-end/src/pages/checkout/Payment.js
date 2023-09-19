@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import PaymentOptions from "./PaymentOptions";
+import { useOrderContext } from "../../hooks/useOrderContext";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Payment = () => {
     const [ sticking, setSticking ] = useState(false);
     const [ orders, setOrders ] = useState(null);
-    const [ shipment, setShipment ] = useState(null);
     const [ payment, setPayment ] = useState(null);
     const [ isChoosingBank, setIsChoosingBank ] = useState(false);
     const [ isChoosingEwallet, setIsChoosingEwallet ] = useState(false);
-    console.log(payment);
+    const { order } = useOrderContext();
+    const { user } = useAuthContext();
 
 
     // functions
@@ -26,17 +28,21 @@ const Payment = () => {
     window.onscroll = () => {
         sticky();
     };
+
+    const computeTotal = () => {
+        return order ? order.totalPrice - order.currentCourier.service.price : 0
+    }
     return ( 
         <div className={`Payment border bg-stone-50  w-[380px] ${sticking && `fixed top-10` } shadow p-5 rounded-md`}>
             <div className="font-medium text-lg pb-3">Order Recap</div>
             <div className="flex justify-between pt-3 pb-1 text-stone-500">
-                <div>Total (x12)</div> <div>IDR 200000</div>
+                <div>Total (x{ user ? user.cart.reduce((acc, item) => { return acc + item.quantity;}, 0) : 0})</div> <div>IDR { order ? order.totalPrice : 0 }</div>
             </div>
             <div className="flex justify-between py-1 text-stone-500">
-                <div>Shipment</div> <div>-IDR 4000</div>
+                <div>Shipment</div> <div>-IDR { order.currentCourier ? order.currentCourier.service.price : 0 }</div>
             </div>
             <div className="flex justify-between py-3 text-stone-900 font-medium text-lg border-b-4">
-                <div>Total</div> <div>IDR 196000</div>
+                <div>Total</div> <div>IDR { computeTotal() }</div>
             </div>
             <div className="font-medium text-lg py-3 ">Payment Method</div>
             <button onClick={() => setIsChoosingBank(!isChoosingBank)}

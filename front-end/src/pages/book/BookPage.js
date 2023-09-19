@@ -13,12 +13,15 @@ const BookPage = () => {
     const [ showNotification, setShowNotification ] = useState(false);
     const [ message, setMessage ] = useState("Book added to cart");
     const { bookId } = useParams();
-    const { user } = useAuthContext();
+    const { user, dispatch } = useAuthContext();
     const addToCart = () => {
         api.post("api/v1/user/cart", {
             userId: user._id,
             bookId
         }).then(res => {
+            const updatedUser = user;
+            updatedUser.cart = res.data.cart;
+            dispatch({ type: 'LOGIN', payload: updatedUser });
             setShowNotification(true);
         }).catch(err => {
             setShowNotification(true);

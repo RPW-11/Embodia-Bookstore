@@ -10,7 +10,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useState } from "react";
 
 const Highlight = ({ data }) => {
-    const { user } = useAuthContext();
+    const { user, dispatch } = useAuthContext();
     const [showNotification, setShowNotification] = useState(false);
     const [message, setMessage] = useState("Book added to cart");
     const description = (desc) => {
@@ -21,6 +21,9 @@ const Highlight = ({ data }) => {
             userId: user._id,
             bookId
         }).then(res => {
+            const updatedUser = user;
+            updatedUser.cart = res.data.cart;
+            dispatch({ type: 'LOGIN', payload: updatedUser });
             setShowNotification(true);
         }).catch(err => {
             setShowNotification(true);

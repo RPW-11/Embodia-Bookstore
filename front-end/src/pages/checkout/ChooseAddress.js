@@ -29,7 +29,6 @@ const ChooseAddress = () => {
         }
         setIsAddingAddress(false);
         setDataOnChange(null);
-        console.log("data is set to null");
     } 
     const handleChoosingAddress = (addr) => {
         setAddress(addr);
@@ -69,7 +68,6 @@ const ChooseAddress = () => {
 
     useEffect(() => {
         if(userAddresses){
-            console.log("testo");
             setAddress(userAddresses[0]);
         }
     },[userAddresses]);

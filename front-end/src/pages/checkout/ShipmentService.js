@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import api from "../../api";
 import Loading from "../../components/Loading";
+import { useOrderContext } from "../../hooks/useOrderContext";
 
 const ShipmentService = () => {
     const [ courier, setCourier ] = useState(null);
     const [ shipments, setShipments ] = useState(null);
     const [ isChoosingShipment, setIsChoosingShipment ] = useState(false);
-
+    const { order, dispatch } = useOrderContext();
+    console.log(order);
     const handleChoosingShipment = (courierName, service) => {
-        setCourier({ courier: courierName, service });
+        const newCourier = { courier: courierName, service }
+        const updatedOrder = { ...order, currentCourier: newCourier };
+        setCourier(newCourier);
+        dispatch({type: 'UPDATE', payload:updatedOrder})
         setIsChoosingShipment(false);
     }
 
@@ -23,9 +28,13 @@ const ShipmentService = () => {
     useEffect(() => {
         api.get("/api/v1/shipment").then(res => {
             setShipments(res.data);
-            setCourier({ courier: res.data[0].courier, service: res.data[0].services[0]})
+            const newCourier = { courier: res.data[0].courier, service: res.data[0].services[0]};
+            setCourier(newCourier)
+            const updatedOrder = { ...order, currentCourier: newCourier };
+            console.log(order);
+            dispatch({type: 'UPDATE', payload:updatedOrder})
         })
-    }, [])
+    }, [dispatch])
     if(!shipments)
         return (<Loading/>)
     return ( 
@@ -45,11 +54,12 @@ const ShipmentService = () => {
                         { isChoosingShipment && (
                             <div className="absolute w-[400px] rounded-md mt-10 overflow-hidden text-left border">
                                 {shipments.map((item) => (
-                                    <div className="bg-stone-50 w-full px-3 py-2 hover:bg-stone-300 group">
+                                    <div className="bg-stone-50 w-full px-3 py-2 hover:bg-stone-300 group" key={item._id}>
                                         {item.courier}
                                         <div className="">
                                             { item.services.map((service) => (
-                                                <div onClick={() => handleChoosingShipment(item.courier, service)}
+                                                <div key={service._id}
+                                                onClick={() => handleChoosingShipment(item.courier, service)}
                                                 className="cursor-pointer hover:bg-stone-400 px-3 py-2 rounded-md items-center justify-between group-hover:flex hidden bg-stone-50 mt-2">
                                                     <div>
                                                         <div className="">{service.name}</div>

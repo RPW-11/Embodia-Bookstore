@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useOrderContext } from "../../hooks/useOrderContext";
 
 const Summary = ({ data }) => {
     const [ subTotal, setSubtotal ] = useState(0);
     const [ discount, setDiscount ] = useState(0);
     const [ grandTotal, setGrandTotal ] = useState(0);
+    const { order, dispatch } = useOrderContext();
     const navigate = useNavigate();
     useEffect(() => {
         let total = data.reduce((accumulator, item) => {
@@ -13,8 +15,10 @@ const Summary = ({ data }) => {
         setSubtotal(total)
         setDiscount(5000);
         setGrandTotal(total - 5000);
+        const updatedOrder = {...order, totalPrice: total - 5000};
+        dispatch({ type: 'UPDATE', payload: updatedOrder })
     }, [data])
-    return ( 
+    return (
         <div className="relative absolute p-5 rounded-md bg-stone-50 text-left border">
             <div className="mb-3 font-semibold">Summary</div>
             <div className="text-sm border-b text-stone-400">

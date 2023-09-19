@@ -6,6 +6,7 @@ import PlusMinus from "./PlusMinus";
 import Summary from "./Summary";
 import ItemBlock from "./ItemBlock";
 import Loading from "../../components/Loading";
+import { OrderContextProvider } from "../../context/OrderContext";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
     const { user, isLogin } = useAuthContext();
@@ -111,7 +112,7 @@ const Cart = () => {
                         </div>
                     </div>
                     <div className="col-span-2 pl-5">
-                    <Summary data={ books }/>
+                        <Summary data={ books }/>
                     </div>
                 </div>
             );

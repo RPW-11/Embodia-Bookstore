@@ -43,7 +43,6 @@ const AuthForm = ({ isLogin }) => {
         else {
             console.log('Sign Up submitted:', username, email, password);
             api.post("/signup", { username, email, password }).then(res => {
-                localStorage.setItem("user", JSON.stringify(res.data));
                 dispatch({ type: 'LOGIN', payload: res.data });
                 navigate("/");
             }).catch(err => {
